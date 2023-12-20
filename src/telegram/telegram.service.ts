@@ -6,7 +6,7 @@ import axios from 'axios';
 import { CarsList } from "./interfaces";
 import { Cron, CronExpression } from '@nestjs/schedule';
 
-const token = '';
+const token = '6847344625:AAFNi7WErznuhli8GtQCZDN2CHaqCqwhToU';
 const BaseUrl = 'https://savdo.uzavtosanoat.uz/b/ap/stream/ph&models';
 
 @Injectable()
