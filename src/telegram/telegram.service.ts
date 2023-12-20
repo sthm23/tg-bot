@@ -13,7 +13,8 @@ const BaseUrl = 'https://savdo.uzavtosanoat.uz/b/ap/stream/ph&models';
 export class TelegramService {
     bot: TelegramBot;
     user_id: number;
-    usersArr:number[] = [153112599, 587757592]
+    // usersArr:number[] = [153112599, 587757592]
+    usersArr:number[] = [153112599, ]
     constructor() {
         this.bot = new TgBot(token, {polling: true});
 
@@ -38,14 +39,21 @@ export class TelegramService {
         })
     }
 
-    @Cron('0 */10 6-17 * * *')
+    @Cron('0 */5 * * * *')
+    // @Cron('45 * * * * *')
     async sentNotification() {
-        if(this.usersArr.length) {
         const result = await this.checkContract();
-        this.usersArr.forEach(user=>{
-            this.bot.sendMessage(user, result);
-        })
+        if(result !== 'Новых договоров нет') {
+            this.bot.sendMessage(153112599, result);
         }
+        // if(this.usersArr.length) {
+        // const result = await this.checkContract();
+        // this.usersArr.forEach(user=>{
+        //     if(result !== 'Новых договоров нет') {
+        //         this.bot.sendMessage(user, result);
+        //     }
+        // })
+        // }
     }
 
     async getUzAutoCars() {
@@ -76,7 +84,7 @@ export class TelegramService {
     async checkContract() {
         try {
             const cars = await this.getUzAutoCars();
-            return cars.length === 6 ? 'Новых договоров нет' : "Договор открыть"
+            return cars.length === 7 ? 'Новых договоров нет' : "Договор открыть"
         } catch (error) {
             return 'Ошибка с получением данных'
         }
